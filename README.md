@@ -25,3 +25,7 @@ Git repo: https://github.com/koninik/DiffusionPen
 This release includes pretrained models for DiffusionPen method. The models include:
 
 ...
+
+**ArXiv**
+
+Nikolaidou, K., Retsinas, G., Sfikas, G. and Liwicki, M., 2024. DiffusionPen: Towards Controlling the Style of Handwritten Text Generation. arXiv preprint arXiv:2409.06065.
