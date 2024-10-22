@@ -7,6 +7,9 @@ base_model:
 tags:
 - handwriting
 - generation
+- handwritten-text-generation
+- HTG
+- stable-diffusion
 ---
 
 # 🔥 DiffusionPen: Towards Controlling the Style of Handwritten Text Generation
