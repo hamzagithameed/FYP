@@ -8,6 +8,7 @@ tags:
 - HTG
 - stable-diffusion
 - handwritten-text-generation
+- https://arxiv.org/pdf/2409.06065
 metrics:
 - cer
 pipeline_tag: text-to-image
@@ -25,5 +26,3 @@ Git repo: https://github.com/koninik/DiffusionPen
 This release includes pretrained models for DiffusionPen method. The models include:
 
 ...
-   
-
