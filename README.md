@@ -7,6 +7,7 @@ base_model:
 tags:
 - HTG
 - stable-diffusion
+- handwritten-text-generation
 metrics:
 - cer
 pipeline_tag: text-to-image
