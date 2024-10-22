@@ -16,7 +16,7 @@ pipeline_tag: text-to-image
 # DiffusionPen: Towards Controlling the Style of Handwritten Text Generation
 
 
-Link to paper - <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/11492_ECCV_2024_paper.php">*DiffusionPen: Towards Controlling the Style of Handwritten Text Generation (ECCV 2024)*</a>
+Link to paper: <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/11492_ECCV_2024_paper.php">*DiffusionPen: Towards Controlling the Style of Handwritten Text Generation (ECCV 2024)*</a>
 
 Git repo: https://github.com/koninik/DiffusionPen
 
