@@ -11,7 +11,6 @@ tags:
 metrics:
 - cer
 pipeline_tag: text-to-image
-library_name: diffusers
 ---
 
 # DiffusionPen: Towards Controlling the Style of Handwritten Text Generation
