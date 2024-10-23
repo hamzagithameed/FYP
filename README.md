@@ -22,9 +22,13 @@ Git repo: https://github.com/koninik/DiffusionPen
 
 **Model Description**
 
-This release includes pretrained models for DiffusionPen method. The models include:
+This release includes pretrained models for DiffusionPen method. The repo includes:
+- IAM pre-processed dataset in .pt for direct loading
+- Style weights for the style encoder (also DiffusionPen-class and DiffusionPen-triplet)
+- DiffusionPen weights
 
-...
+For VAE and DDIM we use stable-diffusion-v1-5/stable-diffusion-v1-5.
+More info on how to utilize weights and data files can be found in the git repo.
 
 **ArXiv**
 
