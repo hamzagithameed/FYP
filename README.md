@@ -23,9 +23,9 @@ Git repo: https://github.com/koninik/DiffusionPen
 **Model Description**
 
 This release includes pretrained models for DiffusionPen method. The repo includes:
-- IAM pre-processed dataset in .pt for direct loading in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/saved_iam_data>saved_iam_data</a>
-- Style weights for the style encoder (also DiffusionPen-class and DiffusionPen-triplet) in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/style_models>style_models</a>
-- DiffusionPen weights for IAM in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/diffusionpen_iam_model_path/models>diffusionpen_iam_model_path/models</a>
+- IAM pre-processed dataset in .pt for direct loading in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/saved_iam_data">saved_iam_data</a>
+- Style weights for the style encoder (also DiffusionPen-class and DiffusionPen-triplet) in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/style_models">style_models</a>
+- DiffusionPen weights for IAM in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/diffusionpen_iam_model_path/models">diffusionpen_iam_model_path/models</a>
 
 For VAE and DDIM we use stable-diffusion-v1-5/stable-diffusion-v1-5.
 More info on how to utilize weights and data files can be found in the git repo.
