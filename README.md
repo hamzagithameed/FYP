@@ -1,35 +1,80 @@
----
-license: mit
-language:
-- en
-base_model:
-- stable-diffusion-v1-5/stable-diffusion-v1-5
-tags:
-- HTG
-- stable-diffusion
-- handwritten-text-generation
-metrics:
-- cer
-pipeline_tag: text-to-image
----
+# DiffusionPen - Handwriting Generation with Diffusion Models
 
-# DiffusionPen: Towards Controlling the Style of Handwritten Text Generation
+DiffusionPen is a deep learning project that generates realistic handwriting using diffusion models. It supports both custom handwriting styles and pre-trained IAM dataset styles.
 
+## Features
 
-Paper - <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/11492_ECCV_2024_paper.php">*DiffusionPen: Towards Controlling the Style of Handwritten Text Generation (ECCV 2024)*</a>
+- 🎨 **Custom Handwriting Style**: Extract style features from your own handwriting samples
+- 📝 **Text-to-Handwriting**: Generate any text in a specified handwriting style
+- 🎯 **Pre-trained Models**: Use pre-trained models trained on IAM dataset
+- 🔄 **Flexible Generation**: Support for both latent space and pixel space generation
 
-Git repo: https://github.com/koninik/DiffusionPen
+## Installation
 
-**Model Description**
+### Prerequisites
 
-This release includes pretrained models for DiffusionPen method. The repo includes:
-- IAM pre-processed dataset in .pt for direct loading in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/saved_iam_data">saved_iam_data</a>
-- Style weights for the style encoder (also DiffusionPen-class and DiffusionPen-triplet) in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/style_models">style_models</a>
-- DiffusionPen weights for IAM in <a href="https://huggingface.co/konnik/DiffusionPen/tree/main/diffusionpen_iam_model_path/models">diffusionpen_iam_model_path/models</a>
+- Python 3.7+
+- CUDA-capable GPU (recommended) or CPU
+- PyTorch
 
-For VAE and DDIM we use <a href="https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5">stable-diffusion-v1-5/stable-diffusion-v1-5</a>.
-More info on how to utilize weights and data files can be found in the git repo.
+### Setup
 
-**ArXiv**
+1. Clone the repository:ash
+git clone <your-repo-url>
+cd DiffusionPen2. Install dependencies:
+pip install -r requirements.txt3. Download pre-trained models:
+   - Place UNet checkpoint in `./diffusionpen_iam_model_path/models/ckpt.pt`
+   - Place style extractor in `./style_models/iam_style_diffusionpen.pth`
 
-Nikolaidou, K., Retsinas, G., Sfikas, G. and Liwicki, M., 2024. DiffusionPen: Towards Controlling the Style of Handwritten Text Generation. arXiv preprint arXiv:2409.06065.
+## Quick Start
+
+### Generate Handwriting with Custom Style
+
+The easiest way to generate handwriting with your own style:
+
+python generate_handwriting.py --text_to_generate "your text here"This script uses reference images from `imgs/IAM_Words_Images/` to extract style features.
+
+### Generate with Custom Style Folder
+
+For more control, use `trainCopy.py`:
+
+python trainCopy.py \
+    --custom_style_folder ./path/to/your/handwriting/images \
+    --text_to_generate "hello world" \
+    --device cuda
+**Parameters:**
+- `--custom_style_folder`: Path to folder containing your handwriting sample images (PNG, JPG, etc.)
+- `--text_to_generate`: Text you want to generate
+- `--device`: `cuda` or `cpu` (default: `cpu`)
+- `--save_path`: Path to UNet model checkpoint (default: `./diffusionpen_iam_model_path`)
+- `--style_path`: Path to style extractor model (default: `./style_models/iam_style_diffusionpen.pth`)
+
+### Generate with Pre-trained IAM Styles
+
+To use pre-trained IAM dataset styles:
+
+python trainCopy.py \
+    --text_to_generate "hello world" \
+    --device cuda(Omitting `--custom_style_folder` will use a random IAM style)
+
+## CMD
+
+for word:
+python trainCopy.py --text_to_generate "hello" --device cpu
+
+for style using samples:
+python generate_handwriting.py --text_to_generate Pakistan
+
+## FastAPI backend
+
+You can now run the project as a FastAPI service that exposes the three primary generation workflows:
+
+```
+uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+- `POST /api/word` – JSON body `{ "text": "hello" }`. Runs `trainCopy.py` to return a single word image (base64 encoded).
+- `POST /api/sentence` – JSON body `{ "text": "hello world" }`. Splits the sentence into words, generates each word with `trainCopy.py`, then stitches the images together into one sentence image.
+- `POST /api/stylized` – `multipart/form-data` with a `text` field and at least five `samples` files (PNG/JPG/BMP). The files are stored under `uploaded_styles/<uuid>/` and passed to the updated `generate_handwriting.py` script for each word before composing the final sentence image.
+
+Each endpoint responds with the requested text, metadata (word count, generated filename), and a base64 string you can render directly in your web app. The raw image files are kept under `custom_generated/` and `api_outputs/` so they can be served or inspected later.
