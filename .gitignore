@@ -25,3 +25,37 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.venv/
+venv/
+
+# AI Models (large files)
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+diffusionpen_iam_model_path/
+style_models/
+
+# Generated outputs
+api_outputs/
+custom_generated/
+uploaded_styles/
+test_output.png
+
+# Documentation (keep only essential)
+*_COMPLETE.md
+*_FIXED.md
+*_WORKING.md
+PYTHON313_MONGODB_ISSUE.md
+VISUAL_COMPARISON.md
+TRANSFORMATION_SUMMARY.md
+
+
+

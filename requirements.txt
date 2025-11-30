@@ -1,0 +1,67 @@
+# ============================================================================
+# COMPLETE DEPENDENCY LIST FOR HANDWRITING GENERATION PROJECT
+# ============================================================================
+# This file contains ALL required dependencies for the entire project.
+# Install with: pip install -r requirements.txt
+# ============================================================================
+
+# Core Deep Learning Dependencies
+# --------------------------------
+torch>=2.0.0                    # PyTorch - core deep learning framework
+torchvision>=0.15.0             # Computer vision utilities for PyTorch
+einops>=0.6.0                   # Tensor operations (required by unet.py)
+
+# Diffusion & Transformer Models
+# -------------------------------
+diffusers>=0.21.0               # Diffusion models (AutoencoderKL, DDIMScheduler)
+transformers>=4.30.0            # HuggingFace transformers (CanineModel, CanineTokenizer)
+timm>=0.9.0                     # Image models library (required by feature_extractor.py)
+
+# Image Processing
+# ----------------
+pillow>=9.0.0                   # PIL/Pillow for image manipulation
+opencv-python>=4.8.0            # OpenCV for advanced image processing (cv2)
+scikit-image>=0.21.0            # Image processing algorithms (skimage)
+
+# Scientific Computing
+# ---------------------
+numpy>=1.24.0                   # Numerical computing
+scipy>=1.10.0                   # Scientific computing utilities
+
+# Data Handling
+# -------------
+tqdm>=4.65.0                    # Progress bars for loops
+pandas>=2.0.0                   # Data manipulation (if needed for datasets)
+
+# API & Web Framework
+# -------------------
+fastapi>=0.100.0                # FastAPI web framework
+uvicorn[standard]>=0.23.0       # ASGI server for FastAPI
+python-multipart>=0.0.6         # Form data parsing for file uploads
+pydantic>=2.0.0                 # Data validation for FastAPI
+reportlab>=4.0.0                # PDF generation library
+
+# Utilities
+# ---------
+wandb>=0.15.0                   # Weights & Biases for experiment tracking (optional but used in train.py)
+omegaconf>=2.3.0                # Configuration management (required by unet.py)
+argparse                        # Command-line argument parsing (built-in, listed for clarity)
+
+# ============================================================================
+# NOTES:
+# ============================================================================
+# 1. opencv-python: Required by trainCopy.py and style_encoder_train.py for cv2
+# 2. scikit-image: Required by utils for image resizing and transformations
+# 3. einops: Critical for unet.py tensor rearrangement operations
+# 4. timm: Required by feature_extractor.py for ImageEncoder
+# 5. wandb: Optional but used in train.py for logging (can be disabled)
+# 6. All versions are minimum requirements - newer versions should work
+# ============================================================================
+
+# Authentication & Database
+# --------------------------
+motor>=3.3.0                    # Async MongoDB driver for Python
+pymongo>=4.5.0                  # MongoDB driver
+passlib[bcrypt]>=1.7.4          # Password hashing with bcrypt
+python-jose[cryptography]>=3.3.0 # JWT token creation and verification
+python-dotenv>=1.0.0            # Environment variable management

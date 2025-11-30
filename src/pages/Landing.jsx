@@ -31,7 +31,7 @@ export default function Landing({ theme, onToggleTheme, user }) {
 
   const actions = user
     ? [
-        { label: 'Open studio', accent: 'primary', to: '/studio', type: 'route' },
+        { label: 'Open Dashboard', accent: 'primary', to: '/dashboard', type: 'route' },
         { label: 'Upload style', accent: 'ghost', to: '#upload', type: 'hash' },
       ]
     : [

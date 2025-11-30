@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Landing from './pages/Landing.jsx';
 import AuthPage from './pages/Auth.jsx';
 import Studio from './pages/Studio.jsx';
+import DashboardLayout from './components/DashboardLayout.jsx';
+import GenerateWord from './pages/GenerateWord.jsx';
+import GenerateSentence from './pages/GenerateSentence.jsx';
+import GenerateStylized from './pages/GenerateStylized.jsx';
+import DetectText from './pages/DetectText.jsx';
 
 export default function App() {
   const prefersDark =
@@ -68,6 +73,23 @@ export default function App() {
               />
             }
           />
+          <Route
+            path="/dashboard"
+            element={
+              <DashboardLayout
+                theme={theme}
+                onToggleTheme={toggleTheme}
+                user={user}
+                onLogout={handleLogout}
+              />
+            }
+          >
+            <Route index element={<Navigate to="/dashboard/word" replace />} />
+            <Route path="word" element={<GenerateWord />} />
+            <Route path="sentence" element={<GenerateSentence />} />
+            <Route path="stylized" element={<GenerateStylized />} />
+            <Route path="detect" element={<DetectText />} />
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>

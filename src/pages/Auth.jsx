@@ -40,11 +40,10 @@ export default function AuthPage({ theme, onToggleTheme, onAuthSuccess }) {
 
   const hint = useMemo(() => hints[Math.floor(Math.random() * hints.length)], [activeTab]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const payload = Object.fromEntries(form.entries());
-    console.table(payload);
 
     setIsSubmitting(true);
     setFeedback({
@@ -52,26 +51,66 @@ export default function AuthPage({ theme, onToggleTheme, onAuthSuccess }) {
       message: activeTab === 'login' ? 'Signing you in…' : 'Creating your workspace…',
     });
 
-    setTimeout(() => {
+    try {
+      const endpoint = activeTab === 'login' ? '/auth/login' : '/auth/signup';
+      const API_BASE_URL = import.meta.env?.VITE_API_BASE_URL || 'http://localhost:8000';
+      
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        throw new Error('Server error. Please try again.');
+      }
+
+      if (!response.ok) {
+        // Handle validation errors
+        if (response.status === 422 && data.detail) {
+          const errors = Array.isArray(data.detail) 
+            ? data.detail.map(err => err.msg).join(', ')
+            : data.detail;
+          throw new Error(errors);
+        }
+        throw new Error(data.detail || 'Authentication failed');
+      }
+
+      // Store token and user data
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('inkwave-user', JSON.stringify(data.user));
+
       setIsSubmitting(false);
       setFeedback({
         type: 'success',
         message:
           activeTab === 'login'
             ? 'Logged in. Routing you to the dashboard.'
-            : 'Account created. Redirecting to onboarding.',
+            : 'Account created. Redirecting to dashboard.',
       });
-      const userPayload = {
-        name: payload.name || 'InkWave Creator',
-        email: payload.email,
-      };
+
+      // Call onAuthSuccess with user data
       if (typeof onAuthSuccess === 'function') {
-        onAuthSuccess(userPayload);
+        onAuthSuccess(data.user);
       }
+
+      // Redirect to dashboard
       setTimeout(() => {
-        navigate('/studio');
+        navigate('/dashboard');
       }, 500);
-    }, 900);
+    } catch (error) {
+      console.error('Auth error:', error);
+      setIsSubmitting(false);
+      setFeedback({
+        type: 'error',
+        message: error.message || 'Something went wrong. Please try again.',
+      });
+    }
   };
 
   return (

@@ -1,0 +1,18 @@
+# HTR Service Dependencies
+# =========================
+# Install these packages to enable Handwritten Text Recognition (HTR)
+# for internal validation only.
+#
+# Installation:
+#   pip install -r requirements_htr.txt
+#
+# Note: These are in addition to your existing project dependencies
+
+# Core HTR dependencies
+transformers>=4.30.0      # HuggingFace Transformers for TrOCR model
+torch>=2.0.0              # PyTorch (likely already installed)
+pillow>=9.0.0             # PIL for image processing (likely already installed)
+
+# Optional but recommended for better performance
+sentencepiece>=0.1.99     # For tokenization
+accelerate>=0.20.0        # For faster model loading
